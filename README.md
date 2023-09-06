@@ -303,5 +303,7 @@ terraform state show "aws_instance.bastion"
 
 ## References
 
+- [spring-lotto-api](https://github.com/simplydemo/spring-lotto-router-handler)
+- [aws-fargate-magiclub](https://github.com/chiwoo-cloud-native/aws-fargate-magiclub)
 - [AWS Lambda & EventBridge | Schedule Start And Stop Of EC2 Instances Based On Tags](https://dheeraj3choudhary.com/aws-lambda-and-eventbridge-or-schedule-start-and-stop-of-ec2-instances-based-on-tags)
 - [aws-samples](https://github.com/orgs/aws-samples/repositories)
