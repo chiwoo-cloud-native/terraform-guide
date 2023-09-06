@@ -66,8 +66,8 @@ Code 를 직접 구현 하며 Terraform 의 실제 동작을 이해하고 주어
 ## Lab 101: 프로비저닝 환경 구성
 
 - [Terraform 설치](./lab-101/guide.md)
-- [CloudFormation](./lab-101/cloudformation.md)
-
+- [CloudFormation 스택 프로비저닝](https://github.com/chiwooiac/cloudformation-stacks/blob/main/src/ec2/nova-provisioner/HELP.md)
+- 실습 환경의 Idempotent를 위해 CF 스택으로 프로비저닝 하는것을 권고합니다. 
 
 <br>
 

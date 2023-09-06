@@ -5,3 +5,4 @@ resource "aws_vpc" "my" {
     Name = "symple-dev-vpc"
   }
 }
+# 2Jqu1uP0oIU6M/FRZQXOCQcwyczBuLd/D2CT4vpezC0=
