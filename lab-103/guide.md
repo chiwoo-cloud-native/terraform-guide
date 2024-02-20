@@ -1,10 +1,21 @@
 # Terraform State 소개
 
-Terraform 기본 명령어와 프로비저닝 흐름을 이해 합니다.
+테라폼 상태 파일(Terraform state file)은 테라폼이 관리하는 인프라 리소스의 현재 상태를 반영한 파일입니다. 
+이 파일은 테라폼이 생성한 리소스, 리소스 간의 종속성, 리소스 속성 등과 같은 정보를 포함하고 있습니다. 
+상태 파일은 일반적으로 .tfstate 확장자를 가지며 JSON 혹은 HCL(HashiCorp Configuration Language) 형식으로 작성됩니다.
+
+테라폼 상태 파일은 다음과 같은 주요 목적을 가지고 있습니다.
+
+- 현재 인프라 상태 추적: 상태 파일은 현재 프로젝트의 인프라 상태를 추적합니다. 이 파일은 테라폼이 생성한 리소스의 정보와 속성을 포함하고 있어 테라폼이 인프라를 관리하는 데 필요한 모든 정보를 담고 있습니다.
+- 리소스 관리 및 변경 추적: 상태 파일은 각 리소스의 현재 상태를 추적하여 변경 사항을 관리합니다. 테라폼은 이 파일을 사용하여 인프라 변경을 추적하고, 새로운 리소스를 생성하거나 기존 리소스를 업데이트 또는 삭제합니다.
+- 스테이트 잠금 및 동시성 제어: 상태 파일은 동시에 여러 사용자나 프로세스가 인프라를 변경하지 못하도록 스테이트 잠금을 관리하는 데 사용됩니다. 이를 통해 여러 사용자가 동시에 동일한 인프라 리소스를 변경하려고 할 때 충돌을 방지하고, 안전한 변경을 보장할 수 있습니다.
+
 
 <br>
 
 ## Terraform 명령어
+
+Terraform 기본 명령어와 프로비저닝 흐름을 이해 합니다.
 
 <br>
 
@@ -24,7 +35,8 @@ terraform --help
 Usage: terraform [global options] <subcommand> [args]
 
 The available commands for execution are listed below.
-The primary workflow commands are given first, followed by less common or more advanced commands.
+The primary workflow commands are given first, followed by
+less common or more advanced commands.
 
 Main commands:
   init          Prepare your working directory for other commands
@@ -42,6 +54,7 @@ All other commands:
   import        Associate existing infrastructure with a Terraform resource
   login         Obtain and save credentials for a remote host
   logout        Remove locally-stored credentials for a remote host
+  metadata      Metadata related commands
   output        Show output values from your root module
   providers     Show the providers required for this configuration
   refresh       Update the state to match remote systems
@@ -57,7 +70,7 @@ Global options (use these before the subcommand, if any):
   -chdir=DIR    Switch to a different working directory before executing the
                 given subcommand.
   -help         Show this help output, or the help for a specified subcommand.
-  -version      An alias for the "version" subcommand.****
+  -version      An alias for the "version" subcommand.
 ```
 
 ### terraform 주요 명령어
@@ -203,19 +216,20 @@ terraform {
 ![](../images/img_21.png)
 
 
-서비스 운영 환경 구분은 Production, Stage, Development, Seoul, USA 등으로 할 수 있습니다.    
-이렇게 구분 하는 단위로 우리는 `Environment` 또는 `Stack` 이라고 말합니다.
+서비스 운영 환경 구분은 Production, Stage, Development, Seoul, USA 등으로 할 수 있습니다.  
+이렇게 구분 하는 단위로 우리는 `Environment` 또는 `Stack`이라고도 합니다.
 
 <br> 
 
-tfstate 상태 파일의 분할 관리 목적은
+tfstate 상태 파일의 분할 관리 목적은 
 
-1. 서비스 운영 환경을 구분 짓고,
+1. 서비스 운영 환경을 격리화 하여 구분 짓고,
 2. 각 환경의 의존성이 없이 독립적으로 운영 되고,
 3. 대규모의 인프라를 블럭 단위로 결합 하는것과 같이 작은 단위로 관리 함으로써 문제를 최소화 하고 가독성을 높으며,
 4. 동일한 코드를 통해 각 환경에 맞게 자동화 된 관리가 가능 하도록 설계에 반영 하는 것 입니다.  
 
-### 프로젝트 구성 심플
+
+### 프로젝트 구성 예시
 
 테라폼 프로젝트를 아래와 같이 주요 구성 파일을 포함하여 간단하게 구성 할 수 있습니다.
 
@@ -241,7 +255,8 @@ terraform destory
 <br>
 
 
-### 프로젝트 폴더(모듈)을 통한 분할 관리
+### 프로젝트 폴더(모듈)을 통한 격리화
+
 
 프로젝트 폴더를 통한 분할 관리는 각 환경에 맞는 디렉토리 구조에서 테라폼 코드 `*.tf` 와 `terraform.tfvars` 를 통해 REAL Infra 를 대상으로 프로비저닝 할 수 있습니다.
 
@@ -279,7 +294,7 @@ terraform plan --var-file="tfvars/environment/prod.tfvars"
 <br>
 
 
-### Workspace 를 통한 관리
+### Workspace 를 통한 스택 관리
 
 terraform Workspace 는 여러 상태를 단일 구성을 통해 관리 할 수 있는 기능 입니다.    
 폴더 기준의 분할 관리와 거의 차이가 없어 보이지만 명확하게 환경을 지정해야 하고 상태 및 변수를 자동으로 관리합니다.    

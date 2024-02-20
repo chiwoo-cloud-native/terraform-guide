@@ -61,12 +61,12 @@ provider "google" {
 
 ```hcl
 terraform {
-  required_version = ">= 1.0.0, < 2.0.0"
+  required_version = ">= 1.4.0, < 1.6.0"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "> 4.22.0"
+      version = ">= 5.0.0, < 6.0.0"
     }
     google = {
       version = "~> 4.0.0"
